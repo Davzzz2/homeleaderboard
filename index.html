@@ -277,29 +277,31 @@
             .cyber-navbar-mobile {
                 display: flex;
                 position: fixed;
-                align-items: center;
+                align-items: flex-start; /* Align to the top */
                 justify-content: center;
-                height: 100%;
-                z-index: 10;
+                height: 50%; /* Adjust height to take 50% of the screen */
+                z-index: 1000;
                 width: 100%;
-                border-left: 1px solid var(--hover-color);
+                border-bottom: 1px solid var(--hover-color);
                 transition: right 300ms ease-in-out;
                 background: linear-gradient(135deg, var(--cyber-blue), var(--dark-blue));
                 left: 0%;
+                overflow: hidden; /* Prevent overflow */
+                box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
             }
 
-            .cyber-navbar-mobile .nav-container {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 100%;
-                flex-direction: column;
+            .nav-container {
+                flex-direction: column; /* Stack items vertically */
+                align-items: flex-start; /* Align to the left */
+                padding: 1rem; /* Add some padding */
             }
 
             .cyber-navbar-mobile .nav-links {
                 display: flex;
                 flex-direction: column;
-                align-items: center;
+                align-items: flex-start; /* Align to the left */
+                gap: 1rem; /* Space between links */
+                width: 100%; /* Full width for links */
             }
 
             .rect-box {
@@ -316,9 +318,8 @@
                 height: 80px; /* Adjust logo size for mobile */
             }
 
-            /* Adjust font sizes and button styles for mobile */
             p {
-                font-size: 1.2rem;
+                font-size: 1.2rem; /* Adjust text size for mobile */
             }
 
             .stake-button {
@@ -337,6 +338,15 @@
                 width: 30px; /* Adjust icon size for mobile */
                 height: 30px; /* Adjust icon size for mobile */
             }
+
+            /* Close button visibility */
+            #close-sidebar-button {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem; /* Position close button to the top right */
+                z-index: 1100; /* Make sure close button is on top */
+            }
         }
 
     </style>
@@ -346,8 +356,7 @@
 
     <div class="cyber-navbar">
         <div class="nav-container">
-            <a href="#" class="nav-logo">
-            </a>
+            <a href="#" class="nav-logo"></a>
             <div class="nav-links">
                 <a href="leaderboard/index.html" class="nav-link">Leaderboard</a>
                 <a href="benefits/benefits.html" class="nav-link">Benefits</a>
@@ -366,17 +375,16 @@
     </button>
 
     <div class="cyber-navbar-mobile" id="cyber-navbar-mobile">
+        <button id="close-sidebar-button" onclick="closeSidebar()" aria-label="close sidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#c9c9c9">
+                <path
+                    d="m480-444.62-209.69 209.7q-7.23 7.23-17.5 7.42-10.27.19-17.89-7.42-7.61-7.62-7.61-17.7 0-10.07 7.61-17.69L444.62-480l-209.7-209.69q-7.23-7.23-7.42-17.5-.19-10.27 7.42-17.89 7.62-7.61 17.7-7.61 10.07 0 17.69 7.61L480-515.38l209.69-209.7q7.23-7.23 17.5-7.42 10.27-.19 17.89 7.42 7.61 7.62 7.61 17.7 0 10.07-7.61 17.69L515.38-480l209.7 209.69q7.23 7.23 7.42 17.5.19 10.27-7.42 17.89-7.62 7.61-17.7 7.61-10.07 0-17.69-7.61L480-444.62Z" />
+            </svg>
+        </button>
+
         <div class="nav-container">
-            <a href="#" class="nav-logo">
-            </a>
+            <a href="#" class="nav-logo"></a>
             <div class="nav-links">
-                <button id="close-sidebar-button" onclick="closeSidebar()" aria-label="close sidebar">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px"
-                        fill="#c9c9c9">
-                        <path
-                            d="m480-444.62-209.69 209.7q-7.23 7.23-17.5 7.42-10.27.19-17.89-7.42-7.61-7.62-7.61-17.7 0-10.07 7.61-17.69L444.62-480l-209.7-209.69q-7.23-7.23-7.42-17.5-.19-10.27 7.42-17.89 7.62-7.61 17.7-7.61 10.07 0 17.69 7.61L480-515.38l209.69-209.7q7.23-7.23 17.5-7.42 10.27-.19 17.89 7.42 7.61 7.62 7.61 17.7 0 10.07-7.61 17.69L515.38-480l209.7 209.69q7.23 7.23 7.42 17.5.19 10.27-7.42 17.89-7.62 7.61-17.7 7.61-10.07 0-17.69-7.61L480-444.62Z" />
-                    </svg>
-                </button>
                 <a href="leaderboard/index.html" class="nav-link">Leaderboard</a>
                 <a href="benefits/benefits.html" class="nav-link">Benefits</a>
                 <a href="StreamRewards/index.html" class="nav-link">Stream Rewards</a>
@@ -412,17 +420,31 @@
         <a id="discord-link" class="social-link" href="https://discord.gg/fns2f3cdnS" target="_blank"></a>
     </div>
 
-
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2N6WBR7DEW"></script>
     <script>
+        // Google Analytics Initialization
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
         gtag('config', 'G-2N6WBR7DEW');
 
+        // Fade-in Effect on Page Load
         window.addEventListener('load', function () {
             document.body.classList.add('fade-in');
         });
+
+        // Sidebar functionality
+        function openSidebar() {
+            document.getElementById('cyber-navbar-mobile').style.display = 'flex';
+            document.getElementById('cyber-navbar-mobile').style.right = '0';
+        }
+
+        function closeSidebar() {
+            document.getElementById('cyber-navbar-mobile').style.right = '-100%';
+            setTimeout(() => {
+                document.getElementById('cyber-navbar-mobile').style.display = 'none';
+            }, 300); // Match the duration of the transition
+        }
     </script>
 
 </body>
