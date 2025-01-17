@@ -23,13 +23,13 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            height: auto; /* Allow auto height for scrolling */
+            height: 100vh;
             background: linear-gradient(135deg, var(--cyber-blue), var(--dark-blue));
             color: var(--stake-white);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start; /* Align items at the top */
+            justify-content: center;
             text-align: center;
             position: relative;
             overflow-x: hidden;
@@ -132,25 +132,22 @@
         }
 
         .highlight {
-            font-size: 2.5rem !important;
+            font-size: 2.5rem;
             font-weight: bold;
-            text-shadow: 0 0 3px var(--neon-blue) !important;
+            text-shadow: 0 0 5px var(--neon-blue);
         }
 
         .highlight-amount {
-            font-size: 2.5rem !important;
+            font-size: 2.5rem;
             font-weight: bold;
             position: relative;
-            top: -28px;
-            text-shadow: 0 0 3px var(--neon-blue) !important;
         }
 
         .highlight-signup {
-            font-size: 2rem !important;
+            font-size: 2rem;
             font-weight: bold;
-            text-shadow: 0 0 3px var(--neon-blue) !important;
+            text-shadow: 0 0 5px var(--neon-blue);
             position: relative;
-            top: -40px;
         }
 
         .stake-button {
@@ -167,8 +164,6 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             font-weight: bold;
             font-size: 1.2rem;
-            position: relative;
-            top: -10px;
         }
 
         .stake-button-text {
@@ -187,9 +182,7 @@
         .social-links {
             display: flex;
             gap: 20px;
-            margin-top: 10px;
-            position: relative;
-            top: 5px; /* Move social links up slightly */
+            margin-top: 20px;
         }
 
         .social-link {
@@ -225,51 +218,44 @@
             background-position: center;
         }
 
-        .nav-logo {
-            position: absolute;
-            left: 30%;
-            height: 120px;
-            filter: drop-shadow(0 0 10px var(--glow-blue));
-        }
-
-        .bonus-info {
-            font-size: 1.5rem;
-            color: #d3d3d3;
-            margin-top: 20px;
-            font-weight: 600;
-            text-shadow: 0 0 1px var(--neon-blue);
-        }
-
-        .cyber-navbar-mobile {
-            display: none;
-            border-radius: 15px; /* Add rounded corners to mobile navbar */
-        }
-
-        #close-sidebar-button {
-            display: none;
-            background: none;
-            border: none;
-            padding: 1em;
-            cursor: pointer;
-        }
-
-        #open-sidebar-button {
-            display: none;
-            position: relative;
-            background: none;
-            border: none;
-            padding: 1em;
-            margin-left: auto;
-            cursor: pointer;
-            z-index: 1100; /* Ensure it's above other elements */
-            margin-top: 10px; /* Move the hamburger menu down a bit */
-        }
-
+        /* Mobile styles remain unchanged */
         @media screen and (max-width: 1000px) {
-
             #open-sidebar-button,
             #close-sidebar-button {
                 display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: min(15em, 100%);
+                z-index: 10;
+                border-left: 1px solid var(--hover-color);
+                transition: right 300ms ease-in-out;
+            }
+
+            nav.show {
+                right: 0;
+            }
+
+            nav.show~#overlay {
+                display: block;
+            }
+
+            nav ul {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            nav a {
+                width: 100%;
+                padding-left: 2.5em;
+            }
+
+            nav .home-li {
+                margin-right: unset;
             }
 
             .cyber-navbar {
@@ -277,93 +263,36 @@
             }
 
             .cyber-navbar-mobile {
-                display: flex;
+                display: none;
                 position: fixed;
-                align-items: flex-start; /* Align to the top */
+                align-items: center;
                 justify-content: center;
-                height: auto; /* Adjust height to auto */
-                z-index: 1000;
+                height: 100%;
+                z-index: 10;
                 width: 100%;
-                border-bottom: 1px solid var(--hover-color);
+                border-left: 1px solid var(--hover-color);
                 transition: right 300ms ease-in-out;
                 background: linear-gradient(135deg, var(--cyber-blue), var(--dark-blue));
                 left: 0%;
-                overflow: hidden; /* Prevent overflow */
-                margin-top: 80px; /* Move navbar down for visibility */
-                padding-bottom: 1rem; /* Add padding to bottom */
-                border-radius: 15px; /* Rounded corners */
             }
 
-            .nav-container {
-                flex-direction: column; /* Stack items vertically */
-                align-items: flex-start; /* Align to the left */
-                padding: 1rem; /* Add some padding */
+            .cyber-navbar-mobile .nav-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
             }
 
             .cyber-navbar-mobile .nav-links {
                 display: flex;
+                height: 100%;
                 flex-direction: column;
-                align-items: flex-start; /* Align to the left */
-                gap: 1rem; /* Space between links */
-                width: 100%; /* Full width for links */
-            }
-
-            .rect-box {
-                margin: 0 2rem;
-            }
-
-            .header-title {
-                font-size: 1.5rem;
-                font-weight: 400;
-                margin-top: 20px; /* Adjust margin for visibility */
-            }
-
-            .nav-logo {
-                height: 80px; /* Adjust logo size for mobile */
-            }
-
-            p {
-                font-size: 1.2rem; /* Adjust text size for mobile */
-            }
-
-            .stake-button {
-                width: 180px; /* Adjust button size for mobile */
-            }
-
-            .bonus-info {
-                font-size: 1.2rem;
-            }
-
-            .social-links {
-                flex-direction: row; /* Align social links horizontally */
-                margin-top: 5px; /* Add space above social links */
-                position: relative; /* Reset position */
-                top: 0; /* Reset top position */
-            }
-
-            .social-link {
-                width: 40px; /* Maintain icon size for mobile */
-                height: 40px; /* Maintain icon size for mobile */
-            }
-
-            /* Close button visibility */
-            #close-sidebar-button {
-                display: block;
-                position: absolute;
-                top: 1rem;
-                right: 1rem; /* Position close button to the top right */
-                z-index: 1100; /* Make sure close button is on top */
+                align-items: center;
+                justify-content: center;
             }
         }
-
-        /* Additional styles for bottom padding */
-        .bottom-padding {
-            padding-bottom: 100px; /* Add padding to the bottom for scrolling */
-        }
-
     </style>
 </head>
-
 <body class="bottom-padding">
 
     <div class="cyber-navbar">
