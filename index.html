@@ -23,13 +23,13 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            height: 100vh;
+            height: auto; /* Allow auto height for scrolling */
             background: linear-gradient(135deg, var(--cyber-blue), var(--dark-blue));
             color: var(--stake-white);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* Align items at the top */
             text-align: center;
             position: relative;
             overflow-x: hidden;
@@ -242,6 +242,7 @@
 
         .cyber-navbar-mobile {
             display: none;
+            border-radius: 15px; /* Add rounded corners to mobile navbar */
         }
 
         #close-sidebar-button {
@@ -261,6 +262,7 @@
             margin-left: auto;
             cursor: pointer;
             z-index: 1100; /* Ensure it's above other elements */
+            margin-top: 10px; /* Move the hamburger menu down a bit */
         }
 
         @media screen and (max-width: 1000px) {
@@ -289,6 +291,7 @@
                 overflow: hidden; /* Prevent overflow */
                 margin-top: 80px; /* Move navbar down for visibility */
                 padding-bottom: 1rem; /* Add padding to bottom */
+                border-radius: 15px; /* Rounded corners */
             }
 
             .nav-container {
@@ -353,10 +356,15 @@
             }
         }
 
+        /* Additional styles for bottom padding */
+        .bottom-padding {
+            padding-bottom: 100px; /* Add padding to the bottom for scrolling */
+        }
+
     </style>
 </head>
 
-<body>
+<body class="bottom-padding">
 
     <div class="cyber-navbar">
         <div class="nav-container">
