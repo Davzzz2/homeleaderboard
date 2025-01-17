@@ -189,7 +189,7 @@
             gap: 20px;
             margin-top: 10px;
             position: relative;
-            top: 10px; /* Move social links up */
+            top: 5px; /* Move social links up slightly */
         }
 
         .social-link {
@@ -260,7 +260,7 @@
             padding: 1em;
             margin-left: auto;
             cursor: pointer;
-            top: -40px;
+            z-index: 1100; /* Ensure it's above other elements */
         }
 
         @media screen and (max-width: 1000px) {
@@ -287,7 +287,7 @@
                 background: linear-gradient(135deg, var(--cyber-blue), var(--dark-blue));
                 left: 0%;
                 overflow: hidden; /* Prevent overflow */
-                margin-top: 60px; /* Move navbar down */
+                margin-top: 80px; /* Move navbar down for visibility */
                 padding-bottom: 1rem; /* Add padding to bottom */
             }
 
@@ -312,7 +312,7 @@
             .header-title {
                 font-size: 1.5rem;
                 font-weight: 400;
-                margin-top: 10px; /* Adjust margin for visibility */
+                margin-top: 20px; /* Adjust margin for visibility */
             }
 
             .nav-logo {
@@ -333,7 +333,7 @@
 
             .social-links {
                 flex-direction: row; /* Align social links horizontally */
-                margin-top: 10px; /* Add space above social links */
+                margin-top: 5px; /* Add space above social links */
                 position: relative; /* Reset position */
                 top: 0; /* Reset top position */
             }
