@@ -224,12 +224,12 @@
         }
 
         .cyber-navbar-mobile {
-            display: none;
+            display: none; /* Hidden by default */
             border-radius: 15px; /* Rounded corners for mobile navbar */
         }
 
         #close-sidebar-button {
-            display: none;
+            display: none; /* Hidden by default */
             background: none;
             border: none;
             padding: 1em;
@@ -237,7 +237,7 @@
         }
 
         #open-sidebar-button {
-            display: none;
+            display: none; /* Hidden by default */
             position: relative;
             background: none;
             border: none;
@@ -248,18 +248,17 @@
         }
 
         @media screen and (max-width: 1000px) {
-
-            #open-sidebar-button,
-            #close-sidebar-button {
-                display: block;
+            /* Show hamburger menu on mobile */
+            #open-sidebar-button {
+                display: block; /* Show hamburger menu */
             }
 
             .cyber-navbar {
-                display: none;
+                display: none; /* Hide desktop navbar */
             }
 
             .cyber-navbar-mobile {
-                display: none;
+                display: none; /* Initially hidden */
                 position: fixed;
                 align-items: flex-start; /* Align to the top */
                 justify-content: center;
@@ -330,7 +329,7 @@
 
             /* Close button visibility */
             #close-sidebar-button {
-                display: block;
+                display: block; /* Show close button */
                 position: absolute;
                 top: 1rem;
                 right: 1rem; /* Position close button to the top right */
