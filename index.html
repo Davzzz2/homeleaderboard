@@ -124,38 +124,15 @@
             position: relative;
         }
 
-        .bold {
-            font-weight: bold;
-        }
-
-        .large-text {
-            font-size: 2rem;
-        }
-
-        .rect-box p:not(.highlight-amount):not(.highlight-signup) {
-            top: -30px;
-            color: #d3d3d3;
-        }
-
-        .highlight {
-            font-size: 2.5rem !important;
-            font-weight: bold;
-            text-shadow: 0 0 3px var(--neon-blue) !important;
-        }
-
-        .highlight-amount {
+        .highlight-amount,
+        .highlight-signup {
             font-size: 2.5rem !important;
             font-weight: bold;
             position: relative;
-            top: -28px;
             text-shadow: 0 0 3px var(--neon-blue) !important;
         }
 
         .highlight-signup {
-            font-size: 2rem !important;
-            font-weight: bold;
-            text-shadow: 0 0 3px var(--neon-blue) !important;
-            position: relative;
             top: -40px;
         }
 
@@ -282,7 +259,7 @@
             }
 
             .cyber-navbar-mobile {
-                display: flex;
+                display: none;
                 position: fixed;
                 align-items: flex-start; /* Align to the top */
                 justify-content: center;
