@@ -30,7 +30,7 @@
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-            padding-bottom: 80px; /* Ensure space for social links at the bottom */
+            padding-bottom: 80px; /* Ensure social links are visible */
         }
 
         .cyber-navbar {
@@ -104,8 +104,92 @@
             animation: titleGlow 2s infinite alternate;
         }
 
-        /* Add more styles for other elements here... */
+        .top-ranks {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap; /* Allows wrapping on smaller screens */
+        }
 
+        .rank-card {
+            background: rgba(0, 4, 40, 0.8);
+            padding: 2.5rem;
+            border-radius: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid var(--neon-blue);
+            backdrop-filter: blur(10px);
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .rank-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            background: linear-gradient(45deg, var(--neon-blue), transparent);
+            opacity: 0.1;
+            z-index: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .rank-card:hover::before {
+            opacity: 0.2;
+        }
+
+        .rank-number {
+            position: absolute;
+            top: -35px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--glow-blue);
+        }
+
+        .crown {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 10px var(--glow-blue));
+            animation: float 2s ease-in-out infinite;
+        }
+
+        .rank-logo {
+            height: 40px;
+            filter: drop-shadow(0 0 10px var(--glow-blue));
+            margin-bottom: 1rem;
+        }
+
+        .cyber-table-container {
+            background: rgba(0, 4, 40, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 1rem;
+            border: 1px solid var(--neon-blue);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.1);
+            overflow-x: auto; /* Make the table scrollable */
+        }
+
+        .cyber-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.5rem;
+        }
+
+        /* Social Links */
         .cyber-social {
             position: fixed;
             right: 2rem;
@@ -133,7 +217,18 @@
             box-shadow: 0 0 15px rgba(255, 255, 255, 1);
         }
 
-        /* Media Queries for Mobile Responsiveness */
+        /* Hamburger Menu Styles */
+        #hamburger {
+            display: none; /* Initially hidden */
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: fixed;
+            top: 1.5rem;
+            right: 2rem;
+            z-index: 1001;
+        }
+
         @media screen and (max-width: 1000px) {
             body {
                 padding-bottom: 80px; /* Maintain space for social links */
@@ -142,10 +237,27 @@
             .cyber-navbar {
                 left: 5%;
                 right: 5%;
+                padding: 1rem;
             }
 
-            .cyber-container {
-                padding: 1rem;
+            .nav-links {
+                display: none; /* Hide nav links initially */
+                flex-direction: column; /* Stack links vertically */
+                position: absolute;
+                background: rgba(0, 4, 40, 0.9);
+                border-radius: 10px;
+                top: 60px; /* Position below the navbar */
+                right: 0;
+                width: 80%; /* Width of the dropdown */
+                z-index: 1000;
+            }
+
+            .nav-links.show {
+                display: flex; /* Show links when toggled */
+            }
+
+            #hamburger {
+                display: block; /* Show hamburger menu */
             }
 
             .rank-card {
@@ -153,17 +265,41 @@
                 margin: 1rem auto; /* Center the cards */
             }
 
-            .cyber-social {
-                right: 1rem; /* Adjust position for mobile */
+            .top-ranks {
+                flex-wrap: wrap; /* Allow wrapping on smaller screens */
+                justify-content: center; /* Center the items */
+            }
+
+            .rank-1, .rank-2, .rank-3 {
+                width: 100%; /* Full width on mobile */
+            }
+
+            .rank-1 {
+                background-color: rgba(255, 215, 0, 0.1); /* Gold background for rank 1 */
+            }
+
+            .rank-2 {
+                background-color: rgba(192, 192, 192, 0.1); /* Silver background for rank 2 */
+            }
+
+            .rank-3 {
+                background-color: rgba(205, 127, 50, 0.1); /* Bronze background for rank 3 */
             }
         }
     </style>
 </head>
 
 <body>
+
+    <button id="hamburger" onclick="toggleMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#c9c9c9">
+            <path d="M165.13-254.62q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.86q7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.87q-7.22 7.12-17.9 7.12H165.13Zm0-200.25q-10.68 0-17.9-7.27-7.23-7.26-7.23-17.99 0-10.74 7.23-17.87 7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.27 7.23 7.26 7.23 17.99 0 10.74-7.23 17.87-7.22 7.13-17.9 7.13H165.13Zm0-200.26q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.87q7.22-7.12 17.9-7.12h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.86q-7.22 7.13-17.9 7.13H165.13Z" />
+        </svg>
+    </button>
+
     <nav class="cyber-navbar">
         <div class="nav-container">
-            <div class="nav-links">
+            <div class="nav-links" id="navLinks">
                 <a href="../home.html" class="nav-link">Home</a>
                 <a href="../benefits/benefits.html" class="nav-link">Benefits</a>
                 <a href="../StreamRewards/index.html" class="nav-link">Stream Rewards</a>
@@ -233,5 +369,13 @@
     </div>
 
     <script src="leaderboard.js"></script>
+    <script>
+        // Toggle the navigation menu
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('show');
+        }
+    </script>
 </body>
+
 </html>
