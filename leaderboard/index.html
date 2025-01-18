@@ -46,35 +46,24 @@
             box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
             border-radius: 15px;
             animation: fadeIn 1s ease-in-out;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
+            align-items: center; /* Align items vertically in the navbar */
+            justify-content: space-between; /* Space between links and hamburger */
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            text-shadow: 0 0 5px var(--glow-blue);
+        .hamburger {
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            cursor: pointer;
+            margin-left: auto; /* Align to the right */
         }
 
-        .nav-link {
-            color: var(--stake-white);
-            text-decoration: none;
-            font-weight: 700;
-            text-shadow: 0 0 5px var(--glow-blue);
+        .bar {
+            height: 4px;
+            width: 30px;
+            background-color: var(--stake-white);
+            margin: 2px 0;
             transition: all 0.3s ease;
-            font-size: 1.5rem;
-        }
-
-        .nav-link:hover {
-            color: var(--neon-blue);
-            text-shadow: 0 0 10px var(--glow-blue);
         }
 
         .cyber-container {
@@ -110,6 +99,7 @@
             align-items: center;
             gap: 2rem;
             margin-top: 2rem;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
         }
 
         .rank-card {
@@ -128,24 +118,6 @@
             margin-top: 1rem;
         }
 
-        .rank-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 15px;
-            background: linear-gradient(45deg, var(--neon-blue), transparent);
-            opacity: 0.1;
-            z-index: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .rank-card:hover::before {
-            opacity: 0.2;
-        }
-
         .rank-number {
             position: absolute;
             top: -35px;
@@ -155,60 +127,13 @@
             text-shadow: 0 0 10px var(--glow-blue);
         }
 
-        .crown {
-            position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2.5rem;
-            filter: drop-shadow(0 0 10px var(--glow-blue));
-            animation: float 2s ease-in-out infinite;
-        }
-
-        .rank-logo {
-            height: 40px;
-            filter: drop-shadow(0 0 10px var(--glow-blue));
-            margin-bottom: 1rem;
-        }
-
-        .warning {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--neon-blue);
-            text-align: center;
-            margin-top: 3rem;
-            text-shadow: 0 0 10px var(--glow-blue), 0 0 20px var(--glow-blue);
-            animation: glow 1.5s infinite alternate;
-            border: 2px solid var(--neon-blue);
-            padding: 1rem;
-            border-radius: 12px;
-            background: rgba(0, 4, 40, 0.8);
-            box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
-        }
-
-        .cyber-table-container {
-            background: rgba(0, 4, 40, 0.8);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-top: 1rem;
-            border: 1px solid var(--neon-blue);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(0, 247, 255, 0.1);
-            overflow-x: auto; /* Make the table scrollable */
-        }
-
-        .cyber-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 0.5rem;
-        }
-
+        /* Social Buttons at the Right Side */
         .cyber-social {
             display: flex;
-            justify-content: flex-end; /* Align social buttons to the right */
-            gap: 1rem;
+            justify-content: center; /* Center align social buttons */
+            gap: 1rem; /* Space between buttons */
             position: fixed;
-            top: 50%; /* Center vertically */
+            top: 50%; /* Centering adjustment */
             right: 2rem; /* Fixed position from the right */
             transform: translateY(-50%); /* Centering adjustment */
             z-index: 1000; /* Ensure it is above other elements */
@@ -234,7 +159,13 @@
         /* Mobile Styles */
         @media screen and (max-width: 1000px) {
             .cyber-navbar {
-                display: none; /* Hide original navbar on mobile */
+                display: flex; /* Keep navbar on mobile */
+                left: 5%;
+                right: 5%;
+            }
+
+            .hamburger {
+                display: flex; /* Show hamburger menu on mobile */
             }
 
             .top-ranks {
@@ -253,33 +184,12 @@
                 font-size: 1.5rem; /* Reduced font size for smaller card */
             }
 
-            .crown {
-                top: -30px; /* Adjust for smaller card */
-                font-size: 2rem; /* Reduced size for smaller card */
-            }
-
-            .rank-logo {
-                height: 30px; /* Reduced logo size for smaller card */
-            }
-
-            .rank-card.rank-1 {
-                order: 1; /* Ensure Rank 1 is on top */
-            }
-
-            .rank-card.rank-2 {
-                order: 2; /* Ensure Rank 2 is in the middle */
-            }
-
-            .rank-card.rank-3 {
-                order: 3; /* Ensure Rank 3 is at the bottom */
-            }
-
             .cyber-social {
                 position: fixed;
-                bottom: 10px; /* Positioned at the bottom on mobile */
+                bottom: 20px; /* Positioned at the bottom on mobile */
                 left: 50%;
-                transform: translateX(-50%);
-                justify-content: space-around; /* Space out social links */
+                transform: translateX(-50%); /* Center horizontally */
+                z-index: 1000; /* Ensure it is above other elements */
             }
         }
     </style>
@@ -293,6 +203,11 @@
                 <a href="../benefits/benefits.html" class="nav-link">Benefits</a>
                 <a href="../StreamRewards/index.html" class="nav-link">Stream Rewards</a>
                 <a href="https://gambleassist.pro" class="nav-link" target="_blank">GambleAssist</a>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
         </div>
     </nav>
@@ -348,16 +263,23 @@
                 <tbody id="leaderboard-body"></tbody>
             </table>
         </div>
-        <div class="cyber-social fade-in">
-            <a href="https://x.com/imEnjayy" target="_blank" class="social-link" id="twitter-link"></a>
-            <a href="https://kick.com/enjayy" target="_blank" class="social-link" id="kick-link"></a>
-            <a href="http://stake.com/?c=penny" target="_blank" class="social-link" id="stake-link"></a>
-            <a href="https://www.youtube.com/channel/UCzioTLxeMrkSkRAOxyXoTcw" target="_blank" class="social-link" id="yt-link"></a>
-            <a id="discord-link" class="social-link" href="https://discord.gg/fns2f3cdnS" target="_blank"></a>
-        </div>
+    </div>
+
+    <div class="cyber-social fade-in">
+        <a href="https://x.com/imEnjayy" target="_blank" class="social-link" id="twitter-link"></a>
+        <a href="https://kick.com/enjayy" target="_blank" class="social-link" id="kick-link"></a>
+        <a href="http://stake.com/?c=penny" target="_blank" class="social-link" id="stake-link"></a>
+        <a href="https://www.youtube.com/channel/UCzioTLxeMrkSkRAOxyXoTcw" target="_blank" class="social-link" id="yt-link"></a>
+        <a id="discord-link" class="social-link" href="https://discord.gg/fns2f3cdnS" target="_blank"></a>
     </div>
 
     <script src="leaderboard.js"></script>
+    <script>
+        function toggleMenu() {
+            // Here you can implement the functionality to open the mobile menu
+            alert('Hamburger menu clicked!');
+        }
+    </script>
 </body>
 
 </html>
