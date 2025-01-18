@@ -3,12 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pennypts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stake Leaderboard</title>
     <link rel="icon" href="pennypts.ico" type="image/x-icon">
-    <script src="script.js" defer></script>
-    <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="styles.css">
     <style>
         :root {
             --cyber-blue: #000428;
@@ -19,38 +17,20 @@
             --glow-blue: rgba(0, 247, 255, 0.5);
         }
 
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        body {
             background: linear-gradient(135deg, var(--cyber-blue), var(--dark-blue));
             color: var(--stake-white);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-
-        body.fade-in {
-            opacity: 1;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            font-weight: bold;
-            margin: 0 0 10px 0;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-        }
-
-        p {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
+            padding-bottom: 80px; /* Ensure space for social links */
         }
 
         .cyber-navbar {
@@ -65,38 +45,31 @@
             border-bottom: 1px solid var(--neon-blue);
             box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
             border-radius: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1.5rem 3rem;
+            animation: fadeIn 1s ease-in-out;
         }
 
         .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
-        }
-
-        .nav-logo {
-            height: 120px;
-            filter: drop-shadow(0 0 10px var(--glow-blue));
+            gap: 2rem;
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
-            justify-content: center;
-            align-items: center;
+            gap: 2rem;
+            text-shadow: 0 0 5px var(--glow-blue);
         }
 
         .nav-link {
             color: var(--stake-white);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
+            font-weight: 700;
             text-shadow: 0 0 5px var(--glow-blue);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
         }
 
         .nav-link:hover {
@@ -104,345 +77,287 @@
             text-shadow: 0 0 10px var(--glow-blue);
         }
 
-        .rect-box {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            border: 4px solid var(--neon-blue);
+        .cyber-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 100px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 3rem;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            margin: 0 auto;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-            padding: 20px;
-        }
-
-        .rect-box p {
-            margin: 5px 0;
-            font-size: 1.2rem;
+            gap: 1rem;
             position: relative;
         }
 
-        .highlight-amount,
-        .highlight-signup {
-            font-size: 2.5rem !important;
-            font-weight: bold;
-            position: relative;
-            text-shadow: 0 0 3px var(--neon-blue) !important;
-        }
-
-        .highlight-signup {
-            top: -10px;
-            margin-top: 20px; /* Additional margin for mobile */
-        }
-
-        .stake-button {
-            width: 220px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, var(--cyber-blue), var(--dark-blue));
-            border-radius: 10px;
-            overflow: hidden;
-            text-decoration: none;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            font-weight: bold;
-            font-size: 1.2rem;
-            position: relative;
-            top: -2px;
-        }
-
-        .stake-button-text {
+        .cyber-title {
+            font-size: 2.5rem;
+            font-weight: 700;
             color: var(--stake-white);
-            padding: 10px 20px;
             text-transform: uppercase;
-            text-align: center;
-            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--glow-blue);
+            animation: titleGlow 2s infinite alternate;
         }
 
-        .stake-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 1);
-        }
-
-        .social-links {
+        .top-ranks {
             display: flex;
-            gap: 20px;
-            margin-top: 10px;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .rank-card {
+            background: rgba(0, 4, 40, 0.8);
+            padding: 2.5rem;
+            border-radius: 15px;
             position: relative;
-            top: -20px;
+            transition: all 0.3s ease;
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid var(--neon-blue);
+            backdrop-filter: blur(10px);
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .rank-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            background: linear-gradient(45deg, var(--neon-blue), transparent);
+            opacity: 0.1;
+            z-index: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .rank-card:hover::before {
+            opacity: 0.2;
+        }
+
+        .rank-number {
+            position: absolute;
+            top: -35px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--glow-blue);
+        }
+
+        .crown {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 10px var(--glow-blue));
+            animation: float 2s ease-in-out infinite;
+        }
+
+        .rank-logo {
+            height: 40px;
+            filter: drop-shadow(0 0 10px var(--glow-blue));
+            margin-bottom: 1rem;
+        }
+
+        .warning {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--neon-blue);
+            text-align: center;
+            margin-top: 3rem;
+            text-shadow: 0 0 10px var(--glow-blue), 0 0 20px var(--glow-blue);
+            animation: glow 1.5s infinite alternate;
+            border: 2px solid var(--neon-blue);
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(0, 4, 40, 0.8);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+        }
+
+        .cyber-table-container {
+            background: rgba(0, 4, 40, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 1rem;
+            border: 1px solid var(--neon-blue);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.1);
+            overflow-x: auto; /* Make the table scrollable */
+        }
+
+        .cyber-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.5rem;
+        }
+
+        .cyber-social {
+            display: flex;
+            justify-content: flex-end; /* Align social buttons to the right */
+            gap: 1rem;
+            position: fixed;
+            top: 50%; /* Center vertically */
+            right: 2rem; /* Fixed position from the right */
+            transform: translateY(-50%); /* Centering adjustment */
+            z-index: 1000; /* Ensure it is above other elements */
         }
 
         .social-link {
-            width: 40px;
-            height: 40px;
+            width: 60px;
+            height: 60px;
             background-size: cover;
             background-position: center;
             border-radius: 50%;
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            border: 2px solid var(--neon-blue);
         }
 
         .social-link:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 1);
         }
 
-        #kick-link {
-            background-image: url('https://i.pinimg.com/736x/f6/4f/56/f64f5611aabc03a17fa0a1ddfc7d0490.jpg');
-        }
-
-        #yt-link {
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png');
-        }
-
-        #twitter-link {
-            background-image: url('https://img.freepik.com/vektoren-kostenlos/neues-twitter-logo-x-icon-design-2023_1017-45418.jpg');
-        }
-
-        #discord-link {
-            background-image: url('https://banner2.cleanpng.com/20180628/ii/aayi53218.webp');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .nav-logo {
-            position: absolute;
-            left: 30%;
-            height: 120px;
-            filter: drop-shadow(0 0 10px var(--glow-blue));
-        }
-
-        .bonus-info {
-            font-size: 1.5rem;
-            color: #d3d3d3;
-            margin-top: 20px;
-            font-weight: 600;
-            text-shadow: 0 0 1px var(--neon-blue);
-        }
-
-        .cyber-navbar-mobile {
-            display: none; /* Initially hidden */
-            border-radius: 15px; /* Rounded corners for mobile navbar */
-        }
-
-        #close-sidebar-button {
-            display: none; /* Hidden by default */
-            background: none;
-            border: none;
-            padding: 1em;
-            cursor: pointer;
-        }
-
-        #open-sidebar-button {
-            display: none; /* Hidden by default */
-            position: relative;
-            background: none;
-            border: none;
-            padding: 1em;
-            margin-left: auto;
-            cursor: pointer;
-            top: 30px; /* Adjusted for visibility */
-            z-index: 1001; /* Ensure above other elements */
-        }
-
+        /* Mobile Styles */
         @media screen and (max-width: 1000px) {
-            #open-sidebar-button {
-                display: block; /* Show hamburger menu */
-            }
-
             .cyber-navbar {
-                display: none; /* Hide desktop navbar */
+                display: none; /* Hide original navbar on mobile */
             }
 
-            .cyber-navbar-mobile {
-                display: none; /* Initially hidden */
+            .top-ranks {
+                flex-direction: column; /* Stack ranks vertically */
+                align-items: center; /* Center align ranks */
+            }
+
+            .rank-card {
+                width: 90%; /* Full width on mobile */
+                margin: 1rem auto; /* Center the cards */
+                padding: 1.5rem; /* Reduced padding for smaller size */
+            }
+
+            .rank-number {
+                top: -20px; /* Adjust for smaller card */
+                font-size: 1.5rem; /* Reduced font size for smaller card */
+            }
+
+            .crown {
+                top: -30px; /* Adjust for smaller card */
+                font-size: 2rem; /* Reduced size for smaller card */
+            }
+
+            .rank-logo {
+                height: 30px; /* Reduced logo size for smaller card */
+            }
+
+            .rank-card.rank-1 {
+                order: 1; /* Ensure Rank 1 is on top */
+            }
+
+            .rank-card.rank-2 {
+                order: 2; /* Ensure Rank 2 is in the middle */
+            }
+
+            .rank-card.rank-3 {
+                order: 3; /* Ensure Rank 3 is at the bottom */
+            }
+
+            .cyber-social {
                 position: fixed;
-                align-items: flex-start; /* Align to the top */
-                justify-content: center;
-                height: auto; /* Adjust height to auto */
-                z-index: 1000;
-                width: 100%;
-                border-bottom: 1px solid var(--hover-color);
-                transition: right 300ms ease-in-out;
-                background: linear-gradient(135deg, var(--cyber-blue), var(--dark-blue));
-                left: 0%;
-                overflow: hidden; /* Prevent overflow */
-                margin-top: 80px; /* Move navbar down for visibility */
-                padding-bottom: 1rem; /* Add padding to bottom */
-                border-radius: 15px; /* Rounded corners */
-            }
-
-            .nav-container {
-                flex-direction: column; /* Stack items vertically */
-                align-items: flex-start; /* Align to the left */
-                padding: 1rem; /* Add some padding */
-            }
-
-            .cyber-navbar-mobile .nav-links {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start; /* Align to the left */
-                gap: 1rem; /* Space between links */
-                width: 100%; /* Full width for links */
-            }
-
-            .rect-box {
-                margin: 0 2rem;
-            }
-
-            .header-title {
-                font-size: 1.5rem;
-                font-weight: 400;
-                margin-top: 20px; /* Move down the title */
-            }
-
-            .nav-logo {
-                height: 80px; /* Adjust logo size for mobile */
-            }
-
-            p {
-                font-size: 1.2rem; /* Adjust text size for mobile */
-            }
-
-            .stake-button {
-                width: 180px; /* Adjust button size for mobile */
-                margin-top: 20px; /* Move down the button */
-            }
-
-            .highlight-signup {
-                margin-top: 40px; /* Move down the "Sign Up Bonus" text */
-            }
-
-            .bonus-info {
-                font-size: 1.2rem;
-                margin-top: 30px; /* Move down the bonus info */
-            }
-
-            .social-links {
-                flex-direction: row; /* Align social links horizontally */
-                margin-top: 5px; /* Add space above social links */
-                position: relative; /* Reset position */
-                bottom: 0; /* Position at the bottom */
-            }
-
-            .social-link {
-                width: 40px; /* Maintain icon size for mobile */
-                height: 40px; /* Maintain icon size for mobile */
-            }
-
-            /* Close button visibility */
-            #close-sidebar-button {
-                display: block; /* Show close button */
-                position: absolute;
-                top: 1rem;
-                right: 1rem; /* Position close button to the top right */
-                z-index: 1100; /* Make sure close button is on top */
-            }
-
-            /* Add bottom padding to body to prevent overlap with social links */
-            body {
-                padding-bottom: 80px; /* Adjust this value as needed */
+                bottom: 10px; /* Positioned at the bottom on mobile */
+                left: 50%;
+                transform: translateX(-50%);
+                justify-content: space-around; /* Space out social links */
             }
         }
     </style>
 </head>
 
 <body>
-
-    <div class="cyber-navbar">
+    <nav class="cyber-navbar">
         <div class="nav-container">
-            <a href="#" class="nav-logo"></a>
             <div class="nav-links">
-                <a href="leaderboard/index.html" class="nav-link">Leaderboard</a>
-                <a href="benefits/benefits.html" class="nav-link">Benefits</a>
-                <a href="StreamRewards/index.html" class="nav-link">Stream Rewards</a>
+                <a href="../home.html" class="nav-link">Home</a>
+                <a href="../benefits/benefits.html" class="nav-link">Benefits</a>
+                <a href="../StreamRewards/index.html" class="nav-link">Stream Rewards</a>
                 <a href="https://gambleassist.pro" class="nav-link" target="_blank">GambleAssist</a>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <button id="open-sidebar-button" onclick="openSidebar()" aria-label="open sidebar" aria-expanded="false"
-        aria-controls="navbar">
-        <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#c9c9c9">
-            <path
-                d="M165.13-254.62q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.86q7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.87q-7.22 7.12-17.9 7.12H165.13Zm0-200.25q-10.68 0-17.9-7.27-7.23-7.26-7.23-17.99 0-10.74 7.23-17.87 7.22-7.13 17.9-7.13h629.74q10.68 0 17.9 7.27 7.23 7.26 7.23 17.99 0 10.74-7.23 17.87-7.22 7.13-17.9 7.13H165.13Zm0-200.26q-10.68 0-17.9-7.26-7.23-7.26-7.23-18t7.23-17.87q7.22-7.12 17.9-7.12h629.74q10.68 0 17.9 7.26 7.23 7.26 7.23 18t-7.23 17.86q-7.22 7.13-17.9 7.13H165.13Z" />
-        </svg>
-    </button>
-
-    <div class="cyber-navbar-mobile" id="cyber-navbar-mobile">
-        <div class="nav-container">
-            <a href="#" class="nav-logo"></a>
-            <div class="nav-links">
-                <button id="close-sidebar-button" onclick="closeSidebar()" aria-label="close sidebar">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#c9c9c9">
-                        <path
-                            d="m480-444.62-209.69 209.7q-7.23 7.23-17.5 7.42-10.27.19-17.89-7.42-7.61-7.62-7.61-17.7 0-10.07 7.61-17.69L444.62-480l-209.7-209.69q-7.23-7.23-7.42-17.5-.19-10.27 7.42-17.89 7.62-7.61 17.7-7.61 10.07 0 17.69 7.61L480-515.38l209.69-209.7q7.23-7.23 17.5-7.42 10.27-.19 17.89 7.42 7.61 7.62 7.61 17.7 0 10.07-7.61 17.69L515.38-480l209.7 209.69q7.23 7.23 7.42 17.5.19 10.27-7.42 17.89-7.62 7.61-17.7 7.61-10.07 0-17.69-7.61L480-444.62Z" />
-                    </svg>
-                </button>
-                <a href="leaderboard/index.html" class="nav-link">Leaderboard</a>
-                <a href="benefits/benefits.html" class="nav-link">Benefits</a>
-                <a href="StreamRewards/index.html" class="nav-link">Stream Rewards</a>
-                <a href="https://gambleassist.pro" class="nav-link" target="_blank">GambleAssist</a>
+    <div class="cyber-container">
+        <div class="header-section">
+            <h1 class="cyber-title">Weekly Leaderboard</h1>
+        </div>
+        <div class="countdown" id="countdown">
+            <div class="label">Leaderboard Starts:</div>
+            <span id="countdown-timer"></span>
+        </div>
+        <div class="top-ranks">
+            <div class="rank-card rank-2 fade-in" data-rank="2">
+                <div class="rank-number">2</div>
+                <img src="images/stake.webp" alt="Stake Logo" class="rank-logo">
+                <div class="rank-content">
+                    <div class="username" id="user-2">Loading...</div>
+                    <div class="wager" id="wagered-2">$0</div>
+                    <div class="reward" id="reward-2">🎁$0</div>
+                </div>
+            </div>
+            <div class="rank-card rank-1 fade-in" data-rank="1">
+                <span class="crown">👑</span>
+                <img src="images/stake.webp" alt="Stake Logo" class="rank-logo">
+                <div class="rank-content">
+                    <div class="username" id="user-1">Loading...</div>
+                    <div class="wager" id="wagered-1">$0</div>
+                    <div class="reward" id="reward-1">🎁$0</div>
+                </div>
+            </div>
+            <div class="rank-card rank-3 fade-in" data-rank="3">
+                <div class="rank-number">3</div>
+                <img src="images/stake.webp" alt="Stake Logo" class="rank-logo">
+                <div class="rank-content">
+                    <div class="username" id="user-3">Loading...</div>
+                    <div class="wager" id="wagered-3">$0</div>
+                    <div class="reward" id="reward-3">🎁$0</div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <p class="header-title"><strong>Explore the wager leaderboard & extra benefits above</strong></p>
-
-    <div class="signup-section">
-        <p>Sign up under code <strong>PENNY</strong></p>
-        <div class="rect-box">
-            <img src="stake.webp" alt="Stake Logo" style="width: 200px; margin-bottom: 20px;">
-            <p class="highlight-amount">$7</p>
-            <p class="highlight-signup">Sign Up Bonus</p>
-            <p>New Users Only</p>
-            <p>5% Rakeback On all Bets</p>
-            <p>Rank Up Benefits</p>
-            <p>Mini-Rank Up Benefits</p>
-            <a href="http://stake.com/?c=penny" class="stake-button">
-                <span class="stake-button-text">SIGN UP</span>
-            </a>
+        <div class="warning fade-in">Multi accounting or wager methods will result in loss of reward</div>
+        <div class="cyber-table-container fade-in">
+            <table class="cyber-table">
+                <thead>
+                    <tr>
+                        <th>RANK</th>
+                        <th>USER</th>
+                        <th>WAGERED</th>
+                        <th>REWARD</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body"></tbody>
+            </table>
         </div>
-        <p class="bonus-info">Post Usernames In Discord To Receive Bonus</p>
+        <div class="cyber-social fade-in">
+            <a href="https://x.com/imEnjayy" target="_blank" class="social-link" id="twitter-link"></a>
+            <a href="https://kick.com/enjayy" target="_blank" class="social-link" id="kick-link"></a>
+            <a href="http://stake.com/?c=penny" target="_blank" class="social-link" id="stake-link"></a>
+            <a href="https://www.youtube.com/channel/UCzioTLxeMrkSkRAOxyXoTcw" target="_blank" class="social-link" id="yt-link"></a>
+            <a id="discord-link" class="social-link" href="https://discord.gg/fns2f3cdnS" target="_blank"></a>
+        </div>
     </div>
 
-    <div class="social-links">
-        <a id="kick-link" class="social-link" href="https://kick.com/enjayy/" target="_blank"></a>
-        <a id="yt-link" class="social-link" href="https://youtube.com/channel/UCzioTLxeMrkSkRAOxyXoTcw" target="_blank"></a>
-        <a id="twitter-link" class="social-link" href="https://twitter.com/imEnjayy" target="_blank"></a>
-        <a id="discord-link" class="social-link" href="https://discord.gg/fns2f3cdnS" target="_blank"></a>
-    </div>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2N6WBR7DEW"></script>
-    <script>
-        // Google Analytics Initialization
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'G-2N6WBR7DEW');
-
-        // Fade-in Effect on Page Load
-        window.addEventListener('load', function () {
-            document.body.classList.add('fade-in');
-        });
-
-        // Sidebar functionality
-        function openSidebar() {
-            document.getElementById('cyber-navbar-mobile').style.display = 'flex';
-            document.getElementById('cyber-navbar-mobile').style.right = '0';
-        }
-
-        function closeSidebar() {
-            document.getElementById('cyber-navbar-mobile').style.right = '-100%';
-            setTimeout(() => {
-                document.getElementById('cyber-navbar-mobile').style.display = 'none';
-            }, 300); // Match the duration of the transition
-        }
-    </script>
-
+    <script src="leaderboard.js"></script>
 </body>
+
 </html>
