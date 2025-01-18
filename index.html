@@ -326,7 +326,7 @@
                 flex-direction: row; /* Align social links horizontally */
                 margin-top: 5px; /* Add space above social links */
                 position: relative; /* Reset position */
-                top: 0; /* Reset top position */
+                bottom: 0; /* Position at the bottom */
             }
 
             .social-link {
@@ -341,6 +341,11 @@
                 top: 1rem;
                 right: 1rem; /* Position close button to the top right */
                 z-index: 1100; /* Make sure close button is on top */
+            }
+
+            /* Add bottom padding to body to prevent overlap with social links */
+            body {
+                padding-bottom: 80px; /* Adjust this value as needed */
             }
         }
     </style>
