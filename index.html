@@ -224,7 +224,7 @@
         }
 
         .cyber-navbar-mobile {
-            display: none; /* Hidden by default */
+            display: none; /* Initially hidden */
             border-radius: 15px; /* Rounded corners for mobile navbar */
         }
 
@@ -244,11 +244,11 @@
             padding: 1em;
             margin-left: auto;
             cursor: pointer;
-            top: -40px; /* Adjusted for visibility */
+            top: 10px; /* Adjusted for visibility */
+            z-index: 1001; /* Ensure above other elements */
         }
 
         @media screen and (max-width: 1000px) {
-            /* Show hamburger menu on mobile */
             #open-sidebar-button {
                 display: block; /* Show hamburger menu */
             }
