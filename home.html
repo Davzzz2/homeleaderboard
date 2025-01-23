@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stake Leaderboard</title>
+    <link rel="icon" href="pennypts.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --cyber-blue: #000428;
+            --neon-blue: #00f7ff;
+            --dark-blue: #004e92;
+            --light-blue: #2196f3;
+            --stake-white: #ffffff;
+            --glow-blue: rgba(0, 247, 255, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--cyber-blue), var(--dark-blue));
+            color: var(--stake-white);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            padding-bottom: 80px; /* Ensure space for social links */
+        }
+
+        .cyber-navbar {
+            background: rgba(0, 4, 40, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 1rem;
+            left: 15%;
+            right: 15%;
+            z-index: 1000;
+            border-bottom: 1px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+            border-radius: 15px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            text-shadow: 0 0 5px var(--glow-blue);
+        }
+
+        .nav-link {
+            color: var(--stake-white);
+            text-decoration: none;
+            font-weight: 700;
+            text-shadow: 0 0 5px var(--glow-blue);
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .nav-link:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--glow-blue);
+        }
+
+        .cyber-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 100px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .cyber-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--stake-white);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--glow-blue);
+            animation: titleGlow 2s infinite alternate;
+        }
+
+        .top-ranks {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .rank-card {
+            background: rgba(0, 4, 40, 0.8);
+            padding: 2.5rem;
+            border-radius: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid var(--neon-blue);
+            backdrop-filter: blur(10px);
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .rank-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            background: linear-gradient(45deg, var(--neon-blue), transparent);
+            opacity: 0.1;
+            z-index: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .rank-card:hover::before {
+            opacity: 0.2;
+        }
+
+        .rank-number {
+            position: absolute;
+            top: -35px;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--glow-blue);
+        }
+
+        .crown {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            filter: drop-shadow(0 0 10px var(--glow-blue));
+            animation: float 2s ease-in-out infinite;
+        }
+
+        .rank-logo {
+            height: 40px;
+            filter: drop-shadow(0 0 10px var(--glow-blue));
+            margin-bottom: 1rem;
+        }
+
+        .warning {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--neon-blue);
+            text-align: center;
+            margin-top: 3rem;
+            text-shadow: 0 0 10px var(--glow-blue), 0 0 20px var(--glow-blue);
+            animation: glow 1.5s infinite alternate;
+            border: 2px solid var(--neon-blue);
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(0, 4, 40, 0.8);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+        }
+
+        .cyber-table-container {
+            background: rgba(0, 4, 40, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 1rem;
+            border: 1px solid var(--neon-blue);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.1);
+            overflow-x: auto; /* Make the table scrollable */
+        }
+
+        .cyber-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.5rem;
+        }
+
+        .cyber-social {
+            display: flex;
+            justify-content: flex-end; /* Align social buttons to the right */
+            gap: 1rem;
+            position: fixed;
+            top: 50%; /* Center vertically */
+            right: 2rem; /* Fixed position from the right */
+            transform: translateY(-50%); /* Centering adjustment */
+            z-index: 1000; /* Ensure it is above other elements */
+        }
+
+        .social-link {
+            width: 60px;
+            height: 60px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            border: 2px solid var(--neon-blue);
+        }
+
+        .social-link:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 1);
+        }
+
+        /* Mobile Styles */
+        @media screen and (max-width: 1000px) {
+            .cyber-navbar {
+                display: none; /* Hide original navbar on mobile */
+            }
+
+            .top-ranks {
+                flex-direction: column; /* Stack ranks vertically */
+                align-items: center; /* Center align ranks */
+            }
+
+            .rank-card {
+                width: 90%; /* Full width on mobile */
+                margin: 1rem auto; /* Center the cards */
+                padding: 1.5rem; /* Reduced padding for smaller size */
+            }
+
+            .rank-number {
+                top: -20px; /* Adjust for smaller card */
+                font-size: 1.5rem; /* Reduced font size for smaller card */
+            }
+
+            .crown {
+                top: -30px; /* Adjust for smaller card */
+                font-size: 2rem; /* Reduced size for smaller card */
+            }
+
+            .rank-logo {
+                height: 30px; /* Reduced logo size for smaller card */
+            }
+
+            .rank-card.rank-1 {
+                order: 1; /* Ensure Rank 1 is on top */
+            }
+
+            .rank-card.rank-2 {
+                order: 2; /* Ensure Rank 2 is in the middle */
+            }
+
+            .rank-card.rank-3 {
+                order: 3; /* Ensure Rank 3 is at the bottom */
+            }
+
+            .cyber-social {
+                position: fixed;
+                bottom: 10px; /* Positioned at the bottom on mobile */
+                left: 50%;
+                transform: translateX(-50%);
+                justify-content: space-around; /* Space out social links */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="cyber-navbar">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="../home.html" class="nav-link">Home</a>
+                <a href="../benefits/benefits.html" class="nav-link">Benefits</a>
+                <a href="../StreamRewards/index.html" class="nav-link">Stream Rewards</a>
+                <a href="https://gambleassist.pro" class="nav-link" target="_blank">GambleAssist</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="cyber-container">
+        <div class="header-section">
+            <h1 class="cyber-title">Weekly Leaderboard</h1>
+        </div>
+        <div class="countdown" id="countdown">
+            <div class="label">Leaderboard Starts:</div>
+            <span id="countdown-timer"></span>
+        </div>
+        <div class="top-ranks">
+            <div class="rank-card rank-2 fade-in" data-rank="2">
+                <div class="rank-number">2</div>
+                <img src="images/stake.webp" alt="Stake Logo" class="rank-logo">
+                <div class="rank-content">
+                    <div class="username" id="user-2">Loading...</div>
+                    <div class="wager" id="wagered-2">$0</div>
+                    <div class="reward" id="reward-2">🎁$0</div>
+                </div>
+            </div>
+            <div class="rank-card rank-1 fade-in" data-rank="1">
+                <span class="crown">👑</span>
+                <img src="images/stake.webp" alt="Stake Logo" class="rank-logo">
+                <div class="rank-content">
+                    <div class="username" id="user-1">Loading...</div>
+                    <div class="wager" id="wagered-1">$0</div>
+                    <div class="reward" id="reward-1">🎁$0</div>
+                </div>
+            </div>
+            <div class="rank-card rank-3 fade-in" data-rank="3">
+                <div class="rank-number">3</div>
+                <img src="images/stake.webp" alt="Stake Logo" class="rank-logo">
+                <div class="rank-content">
+                    <div class="username" id="user-3">Loading...</div>
+                    <div class="wager" id="wagered-3">$0</div>
+                    <div class="reward" id="reward-3">🎁$0</div>
+                </div>
+            </div>
+        </div>
+        <div class="warning fade-in">Multi accounting or wager methods will result in loss of reward</div>
+        <div class="cyber-table-container fade-in">
+            <table class="cyber-table">
+                <thead>
+                    <tr>
+                        <th>RANK</th>
+                        <th>USER</th>
+                        <th>WAGERED</th>
+                        <th>REWARD</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body"></tbody>
+            </table>
+        </div>
+        <div class="cyber-social fade-in">
+            <a href="https://x.com/imEnjayy" target="_blank" class="social-link" id="twitter-link"></a>
+            <a href="https://kick.com/enjayy" target="_blank" class="social-link" id="kick-link"></a>
+            <a href="http://stake.com/?c=penny" target="_blank" class="social-link" id="stake-link"></a>
+            <a href="https://www.youtube.com/channel/UCzioTLxeMrkSkRAOxyXoTcw" target="_blank" class="social-link" id="yt-link"></a>
+            <a id="discord-link" class="social-link" href="https://discord.gg/fns2f3cdnS" target="_blank"></a>
+        </div>
+    </div>
+
+    <script src="leaderboard.js"></script>
+</body>
+
+</html>
